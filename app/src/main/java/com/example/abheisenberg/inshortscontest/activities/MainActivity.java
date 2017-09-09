@@ -1,7 +1,9 @@
-package com.example.abheisenberg.inshortscontest;
+package com.example.abheisenberg.inshortscontest.activities;
 
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+
+import com.example.abheisenberg.inshortscontest.R;
 
 public class MainActivity extends AppCompatActivity {
 
