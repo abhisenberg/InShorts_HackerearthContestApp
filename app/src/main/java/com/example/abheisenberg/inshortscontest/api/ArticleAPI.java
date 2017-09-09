@@ -12,6 +12,6 @@ import retrofit2.http.GET;
  */
 
 public interface ArticleAPI {
-    @GET("/")
+    @GET("/newsjson")
     Call<ArrayList<Article>> getAllArticles();
 }

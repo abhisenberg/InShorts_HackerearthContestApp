@@ -19,7 +19,7 @@ public class API {
 
     private API() {
         Retrofit retrofit = new Retrofit.Builder()
-                .baseUrl("http://starlord.hackerearth.com/newsjson")
+                .baseUrl("http://starlord.hackerearth.com/")
                 .addConverterFactory(
                         GsonConverterFactory.create()
                 )
