@@ -8,4 +8,12 @@
         <item name="colorAccent">@color/colorAccent</item>
     </style>
 
+    <style name="AppTheme.ActionBarStyle" parent="Widget.AppCompat.Light.ActionBar">
+        <item name="android:titleTextStyle">@style/AppTheme.ActionBarStyle.TitleTextStyle</item>
+    </style>
+
+    <style name="AppTheme.ActionBarStyle.TitleTextStyle" parent="TextAppearance.AppCompat">
+        <item name="android:textColor">@color/colorAppTitle</item>
+    </style>
+
 </resources>

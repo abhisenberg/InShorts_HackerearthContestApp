@@ -4,6 +4,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.text.Html;
 import android.util.Log;
 import android.view.View;
 
@@ -29,6 +30,11 @@ public class ArticlesActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_articles);
 
+        String titleColor = getString(R.string.grey_color);
+        getSupportActionBar().setTitle(Html.fromHtml(
+                "<font color='"+titleColor+"'>"+getString(R.string.app_name)+"</font>"
+        ));
+
         RecyclerView recyclerView = (RecyclerView) findViewById(R.id.rvArticleList);
         final ArticleAdapter articleAdapter = new ArticleAdapter(this, new ArrayList<Article>());
 
@@ -42,6 +48,7 @@ public class ArticlesActivity extends AppCompatActivity {
                 if(response.isSuccessful()){
                     Log.d(TAG, "onResponse: size "+response.body().size());
                     articleAdapter.updateArticles(response.body());
+                    findViewById(R.id.loadingCircle_articlesAct).setVisibility(View.GONE);
                 } else {
                     Log.d(TAG, "onResponse: Erorr-> "+response.errorBody().toString());
                 }

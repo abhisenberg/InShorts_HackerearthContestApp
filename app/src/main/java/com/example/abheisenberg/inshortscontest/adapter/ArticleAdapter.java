@@ -1,6 +1,7 @@
 package com.example.abheisenberg.inshortscontest.adapter;
 
 import android.content.Context;
+import android.content.Intent;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -9,6 +10,7 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.example.abheisenberg.inshortscontest.R;
+import com.example.abheisenberg.inshortscontest.activities.BrowserActivity;
 import com.example.abheisenberg.inshortscontest.interfaces.OnItemClickListener;
 import com.example.abheisenberg.inshortscontest.model.Article;
 
@@ -61,7 +63,10 @@ public class ArticleAdapter
         holder.thisView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                
+                Intent fullArticle = new Intent(context, BrowserActivity.class);
+                fullArticle.putExtra(BrowserActivity.ARTICLE_URL, thisArticle.getURL());
+
+                context.startActivity(fullArticle);
             }
         });
     }
