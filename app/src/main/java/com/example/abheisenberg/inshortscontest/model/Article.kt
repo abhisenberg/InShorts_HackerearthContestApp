@@ -10,5 +10,6 @@ data class Article (
         val PUBLISHER: String,
         val CATEGORY: String,
         val HOSTNAME: String,
-        val TIMESTAMP: Long
+        val TIMESTAMP: Long,
+        var FAV: Int
 )

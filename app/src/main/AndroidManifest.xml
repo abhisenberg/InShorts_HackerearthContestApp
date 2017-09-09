@@ -3,6 +3,7 @@
     package="com.example.abheisenberg.inshortscontest">
 
     <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
 
     <application
         android:allowBackup="true"
@@ -19,7 +20,8 @@
             </intent-filter>
         </activity>
         <activity android:name=".activities.ArticlesActivity" />
-        <activity android:name=".activities.BrowserActivity"></activity>
+        <activity android:name=".activities.BrowserActivity" />
+        <activity android:name=".activities.Favourites"></activity>
     </application>
 
 </manifest>

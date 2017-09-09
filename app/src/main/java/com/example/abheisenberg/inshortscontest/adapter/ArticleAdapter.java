@@ -7,10 +7,13 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.abheisenberg.inshortscontest.R;
 import com.example.abheisenberg.inshortscontest.activities.BrowserActivity;
+import com.example.abheisenberg.inshortscontest.database.DBHandler;
 import com.example.abheisenberg.inshortscontest.interfaces.OnItemClickListener;
 import com.example.abheisenberg.inshortscontest.model.Article;
 
@@ -39,10 +42,25 @@ public class ArticleAdapter
         this.articlesList = articlesList;
     }
 
-    public void updateArticles(ArrayList<Article> articlesList){
-        this.articlesList = articlesList;
-        notifyDataSetChanged();
+//    public void updateArticles(ArrayList<Article> articlesList){
+//        this.articlesList = articlesList;
+//        notifyDataSetChanged();
+//        Log.d(TAG, "updateArticles, new size: "+articlesList.size());
+//    }
+
+    public void showArticles(){
+        DBHandler dbHandler = new DBHandler(context);
+        this.articlesList = dbHandler.getAllArticles();
+        Toast.makeText(context, "New size "+articlesList.size(), Toast.LENGTH_SHORT).show();
         Log.d(TAG, "updateArticles, new size: "+articlesList.size());
+        notifyDataSetChanged();
+    }
+
+    public void showFavArticles(){
+        DBHandler dbHandler = new DBHandler(context);
+        this.articlesList = dbHandler.getFavArticles();
+        Log.d(TAG, "updateArticles, new size: "+articlesList.size());
+        notifyDataSetChanged();
     }
 
     @Override
@@ -54,9 +72,10 @@ public class ArticleAdapter
     }
 
     @Override
-    public void onBindViewHolder(ArticleViewHolder holder, int position) {
+    public void onBindViewHolder(final ArticleViewHolder holder, int position) {
         final Article thisArticle = articlesList.get(position);
 
+        holder.ivFav.setImageResource(setFavImg(thisArticle.getFAV()));
         holder.tvHeadline.setText(thisArticle.getTITLE());
         holder.tvPublisher.setText(cleanPublisherName(thisArticle.getPUBLISHER()));
         holder.tvTime.setText(timestampToDate(thisArticle.getTIMESTAMP()));
@@ -69,6 +88,23 @@ public class ArticleAdapter
                 context.startActivity(fullArticle);
             }
         });
+        holder.ivFav.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                
+                if(thisArticle.getFAV() == 0){
+                    thisArticle.setFAV(1);
+                    Toast.makeText(context, "Added to favourites!", Toast.LENGTH_SHORT).show();
+                    holder.ivFav.setImageResource(R.drawable.fav);
+
+                } else {
+                    thisArticle.setFAV(0);
+                    Toast.makeText(context, "Removed from favourites!", Toast.LENGTH_SHORT).show();
+                    holder.ivFav.setImageResource(R.drawable.not_fav);
+                }
+            }
+        });
+
     }
 
     @Override
@@ -78,6 +114,7 @@ public class ArticleAdapter
 
     class ArticleViewHolder extends  RecyclerView.ViewHolder {
         TextView tvHeadline, tvTime, tvPublisher;
+        ImageView ivFav;
         View thisView;
 
         private ArticleViewHolder(View itemView) {
@@ -86,6 +123,7 @@ public class ArticleAdapter
             tvHeadline = (TextView) itemView.findViewById(R.id.tvHeadline);
             tvTime = (TextView) itemView.findViewById(R.id.tvTime);
             tvPublisher = (TextView) itemView.findViewById(R.id.tvPublisher);
+            ivFav = (ImageView) itemView.findViewById(R.id.ivFav);
         }
     }
 
@@ -107,6 +145,14 @@ public class ArticleAdapter
         }
 
         return publisherName;
+    }
+
+    private int setFavImg(int isFav){
+        if(isFav == 0){
+            return R.drawable.not_fav;
+        } else {
+            return R.drawable.not_fav;
+        }
     }
 
 }
